@@ -1,0 +1,32 @@
+# Smoke SFT — tiny subset, few steps, runnable without paid GPU
+# Full recipe (for paid GPU later): see configs/full_sft.yaml
+
+seed: 42
+output_dir: outputs/smoke_sft
+
+model:
+  name: Qwen/Qwen2.5-3B-Instruct
+  load_in_4bit: true   # ignored on CPU; used when CUDA is available
+
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+data:
+  train_file: data/sample/train.jsonl
+  max_samples: 8
+
+train:
+  batch_size: 1
+  grad_accum: 1
+  lr: 2.0e-4
+  epochs: 1
+  max_steps: 2          # smoke: 2 optimizer steps only
+  logging_steps: 1
+  save_steps: 2
+  max_seq_length: 512
+  bf16: false
+  fp16: false
+  report_to: none

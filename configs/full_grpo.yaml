@@ -1,0 +1,47 @@
+# Full GRPO recipe — documented for paid GPU runs
+#
+# Target scale (resume-style): ~3000 prompts × 4 generations
+# Wall time rough order: several A100-hours (often cited ~8.5h end-to-end
+# including SFT+GRPO+eval depending on hardware and logging).
+#
+# Free track documents this recipe but does not claim reproduced metrics
+# without a paid GPU run.
+
+seed: 42
+output_dir: outputs/full_grpo
+
+model:
+  name: Qwen/Qwen2.5-3B-Instruct
+  load_in_4bit: true
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+
+data:
+  train_file: data/processed/train.jsonl
+  max_samples: 3000
+
+sft_adapter: outputs/full_sft/adapter
+
+reward_weights:
+  validity: 0.2
+  execution: 0.3
+  correctness: 0.5
+
+train:
+  batch_size: 1
+  grad_accum: 4
+  lr: 5.0e-7
+  epochs: 1
+  max_steps: -1
+  logging_steps: 5
+  save_steps: 100
+  num_generations: 4       # G=4 rollouts per prompt
+  max_completion_length: 256
+  max_prompt_length: 1536
+  temperature: 0.7
+  bf16: true
+  fp16: false
+  report_to: none

@@ -1,0 +1,42 @@
+# Smoke GRPO — tiny subset, few steps (num_generations=2)
+# Full recipe (3k prompts × 4 generations): see configs/full_grpo.yaml
+
+seed: 42
+output_dir: outputs/smoke_grpo
+
+model:
+  name: Qwen/Qwen2.5-3B-Instruct
+  load_in_4bit: true
+
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.05
+
+data:
+  train_file: data/sample/train.jsonl
+  max_samples: 4
+
+# Optional: continue from smoke SFT adapter
+# sft_adapter: outputs/smoke_sft/adapter
+
+reward_weights:
+  validity: 0.2
+  execution: 0.3
+  correctness: 0.5
+
+train:
+  batch_size: 1
+  grad_accum: 1
+  lr: 5.0e-7
+  epochs: 1
+  max_steps: 2
+  logging_steps: 1
+  save_steps: 2
+  num_generations: 2
+  max_completion_length: 128
+  max_prompt_length: 512
+  temperature: 0.8
+  bf16: false
+  fp16: false
+  report_to: none

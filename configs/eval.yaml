@@ -1,0 +1,7 @@
+# Eval defaults
+model:
+  name: Qwen/Qwen2.5-3B-Instruct
+
+eval:
+  max_new_tokens: 256
+  data: data/sample/dev.jsonl

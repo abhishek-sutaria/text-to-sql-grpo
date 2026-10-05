@@ -1,0 +1,33 @@
+# Full SFT recipe (paid GPU — e.g. 1× A100 40GB or 24GB+ consumer GPU)
+# Expected wall time: ~1–2 hours on A100 for ~7k Spider train examples, 1 epoch.
+# Free track does NOT run this overnight without GPU budget.
+
+seed: 42
+output_dir: outputs/full_sft
+
+model:
+  name: Qwen/Qwen2.5-3B-Instruct
+  load_in_4bit: true
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+data:
+  train_file: data/processed/train.jsonl
+  max_samples: null
+
+train:
+  batch_size: 2
+  grad_accum: 8          # effective batch 16
+  lr: 1.0e-4
+  epochs: 1
+  max_steps: -1
+  logging_steps: 10
+  save_steps: 200
+  max_seq_length: 1536
+  bf16: true
+  fp16: false
+  report_to: none
