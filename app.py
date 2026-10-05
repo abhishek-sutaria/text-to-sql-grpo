@@ -171,7 +171,7 @@ def generate(db_id: str, question: str, gold_sql: str):
         gen = out[0][inputs["input_ids"].shape[-1] :]
         raw = _tokenizer.decode(gen, skip_special_tokens=True)
         adapter = os.environ.get("ADAPTER_ID", "").strip()
-        note = f"Model: {model_id}"
+        note = f"Model: {_resolved_model_id()}"
         if adapter:
             note += f"\nAdapter: {adapter}"
     else:
