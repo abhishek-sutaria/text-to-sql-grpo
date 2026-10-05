@@ -126,7 +126,9 @@ tests/                 unit tests for exec + rewards
 
 ## Deploy to Hugging Face Spaces
 
-1. Create a new Space (Gradio SDK).
+**Note:** Gradio Spaces on `cpu-basic` require a [Hugging Face PRO](https://huggingface.co/pro) subscription on the owner account. Without PRO, run `python app.py` locally or use the static landing Space linked below.
+
+1. Create a new Space (Gradio SDK, `cpu-basic` hardware).
 2. Push this repo (or copy `app.py`, `src/`, `data/sample/`, `requirements-spaces.txt`).
 3. Set Space SDK file to `app.py`. Use `README_spaces.md` YAML header as the Space README.
 4. Optional Space secrets/vars: `MODEL_ID`, `ADAPTER_ID` (skip for free CPU stub mode).
