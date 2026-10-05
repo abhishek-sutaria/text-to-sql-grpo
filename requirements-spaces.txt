@@ -1,5 +1,6 @@
 # Minimal deps for Hugging Face Spaces Gradio demo (ZeroGPU)
-gradio>=4.44.0
+# Gradio>=5 avoids ImportError: cannot import name 'HfFolder' from huggingface_hub
+gradio>=5.9.0
 spaces>=0.30.0
 sqlglot>=25.0.0
 transformers>=4.46.0
