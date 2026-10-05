@@ -5,11 +5,11 @@ colorFrom: blue
 colorTo: green
 sdk: gradio
 sdk_version: 4.44.0
-hardware: cpu-basic
+hardware: zero-a10g
 app_file: app.py
 pinned: false
 license: mit
-short_description: Spider-style text-to-SQL with execution rewards (free-track demo)
+short_description: Text-to-SQL GRPO demo with execution rewards
 ---
 
 # Text-to-SQL GRPO

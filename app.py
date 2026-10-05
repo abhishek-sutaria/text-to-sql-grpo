@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
 
 import gradio as gr
+import spaces
 
 from text_to_sql_grpo.prompts import build_messages, extract_sql
 from text_to_sql_grpo.rewards import score_prediction
@@ -110,7 +111,9 @@ def stub_sql(schema: str, question: str) -> str:
     return "SELECT 1"
 
 
+@spaces.GPU
 def generate(db_id: str, question: str, gold_sql: str):
+    """Generation path decorated for HF ZeroGPU (works in stub mode too)."""
     if db_id not in SAMPLE_DBS:
         return "Unknown DB", "", "", ""
     db_path = SAMPLE_DBS[db_id]

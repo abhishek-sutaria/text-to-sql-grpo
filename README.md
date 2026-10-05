@@ -126,12 +126,12 @@ tests/                 unit tests for exec + rewards
 
 ## Deploy to Hugging Face Spaces
 
-**Note:** Gradio Spaces on `cpu-basic` require a [Hugging Face PRO](https://huggingface.co/pro) subscription on the owner account. Without PRO, run `python app.py` locally or use the static landing Space linked below.
+**Note:** Gradio on `cpu-basic` needs [HF PRO](https://huggingface.co/pro) (quota 0 otherwise). Free ZeroGPU uses `hardware: zero-a10g` plus `@spaces.GPU` on the Gradio generation handler (`app.py`).
 
-1. Create a new Space (Gradio SDK, `cpu-basic` hardware).
-2. Push this repo (or copy `app.py`, `src/`, `data/sample/`, `requirements-spaces.txt`).
-3. Set Space SDK file to `app.py`. Use `README_spaces.md` YAML header as the Space README.
-4. Optional Space secrets/vars: `MODEL_ID`, `ADAPTER_ID` (skip for free CPU stub mode).
+1. Create a Space (Gradio SDK) or reuse `abhisheksutaria/text-to-sql-grpo`.
+2. Upload `app.py`, `src/`, `data/sample/`, and `requirements-spaces.txt` as Space `requirements.txt`.
+3. Use `README_spaces.md` YAML as the Space README (`app_file: app.py`, `hardware: zero-a10g`).
+4. Optional Space secrets/vars: `MODEL_ID`, `ADAPTER_ID` (omit for free stub mode).
 
 ```bash
 # from a machine with `huggingface-cli` logged in:
@@ -142,7 +142,7 @@ huggingface-cli upload <user>/text-to-sql-grpo . --repo-type=space
 
 Public repo: https://github.com/abhishek-sutaria/text-to-sql-grpo
 
-Hugging Face Space (CPU demo): https://huggingface.co/spaces/abhisheksutaria/text-to-sql-grpo
+Hugging Face Space (ZeroGPU stub demo): https://huggingface.co/spaces/abhisheksutaria/text-to-sql-grpo
 
 ## Honest results (free track)
 
