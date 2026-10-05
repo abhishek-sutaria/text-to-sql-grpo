@@ -131,7 +131,7 @@ tests/                 unit tests for exec + rewards
 1. Create a Space (Gradio SDK) or reuse `abhisheksutaria/text-to-sql-grpo`.
 2. Upload `app.py`, `src/`, `data/sample/`, and `requirements-spaces.txt` as Space `requirements.txt`.
 3. Use `README_spaces.md` YAML as the Space README (`app_file: app.py`, `hardware: zero-a10g`).
-4. Optional Space secrets/vars: `MODEL_ID`, `ADAPTER_ID` (omit for free stub mode).
+4. Space vars: `MODEL_ID=Qwen/Qwen2.5-3B-Instruct` (default on ZeroGPU). Secret `ADAPTER_ID` for GRPO LoRA. See `docs/PORTFOLIO_ALIGNMENT.md`.
 
 ```bash
 # from a machine with `huggingface-cli` logged in:
