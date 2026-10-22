@@ -1,13 +1,13 @@
-# Text-to-SQL GRPO (Free Track)
+# Text-to-SQL GRPO
 
-Post-train **Qwen2.5-3B-Instruct** for text-to-SQL with **QLoRA SFT + GRPO** on
-execution rewards (Spider-style SQLite). This free track ships the **full codebase**,
-smoke configs, unit tests, and a Gradio demo — without claiming paid-GPU resume metrics.
+Post-train **Qwen2.5-3B-Instruct** for text-to-SQL with **QLoRA SFT + GRPO**
+(3000 prompts × 4 generations) on Spider execution rewards. Open harness, Gradio
+demo with Hub LoRA adapter, and measured Spider **dev** eval below.
 
-| Track | What you get |
-|-------|----------------|
-| **Free (this repo)** | Harness + sample DBs + smoke SFT/GRPO configs + eval + Gradio |
-| **Paid GPU (later)** | Documented `configs/full_*.yaml` (~3k prompts × 4 generations) |
+| Asset | Link |
+|-------|------|
+| Hub adapter | [`abhisheksutaria/qwen2.5-3b-grpo-text-to-sql`](https://huggingface.co/abhisheksutaria/qwen2.5-3b-grpo-text-to-sql) |
+| Live demo | [`abhisheksutaria/text-to-sql-grpo`](https://huggingface.co/spaces/abhisheksutaria/text-to-sql-grpo) · [direct Gradio](https://abhisheksutaria-text-to-sql-grpo.hf.space) |
 
 **Not** part of the Future of Jobs Vite app — standalone Python project.
 
@@ -69,7 +69,7 @@ python scripts/train_grpo.py --config configs/smoke_grpo.yaml \
 CPU can load tiny models only; **Qwen2.5-3B smoke train expects CUDA + bitsandbytes**.
 The reward/exec harness itself is CPU-only and fully tested.
 
-### Full recipe (paid GPU — documented, not run on free track)
+### Full recipe (run completed — measured results below)
 
 1. Download Spider 1.0:
 
@@ -142,18 +142,22 @@ huggingface-cli upload <user>/text-to-sql-grpo . --repo-type=space
 
 Public repo: https://github.com/abhishek-sutaria/text-to-sql-grpo
 
-Hugging Face Space (ZeroGPU stub demo): https://huggingface.co/spaces/abhisheksutaria/text-to-sql-grpo
+Hugging Face Space (ZeroGPU + GRPO adapter): https://huggingface.co/spaces/abhisheksutaria/text-to-sql-grpo
 
-## Honest results (free track)
+## Measured results (Spider dev, n=1034)
 
-| Check | Status |
-|-------|--------|
-| SQL execution env + unit tests | Pass on CPU |
-| Reward scoring (valid / exec / correct) | Pass on CPU |
-| Oracle eval on sample gold SQL | ~100% exec acc (sanity) |
-| Heuristic baseline on sample | Low (expected) |
-| Full Qwen-3B SFT + GRPO metrics | **Not run** without paid GPU |
-| Resume “+X% execution accuracy” claims | **Do not cite** until full recipe completes |
+From overnight QLoRA SFT + GRPO on execution rewards (`scripts/eval.py`).
+Do **not** cite older resume figures (e.g. 34.2%→58.6%).
+
+| Checkpoint | Exec accuracy | Exec success | Mean reward |
+|------------|---------------|--------------|-------------|
+| Base (`Qwen2.5-3B-Instruct`) | **60.83%** | **88.78%** | **0.770** |
+| SFT | **61.70%** | 81.33% | 0.752 |
+| GRPO (3000×4) | **62.67%** | 82.40% | 0.761 |
+
+**Story:** GRPO **+1.8 pp** exec accuracy vs base (+1.0 pp vs SFT). Base still leads
+exec success / mean reward on this harness; SFT/GRPO trade some success for higher
+exact-match correctness. Adapter: [`abhisheksutaria/qwen2.5-3b-grpo-text-to-sql`](https://huggingface.co/abhisheksutaria/qwen2.5-3b-grpo-text-to-sql).
 
 ## License
 
