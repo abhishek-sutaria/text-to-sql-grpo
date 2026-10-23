@@ -69,7 +69,7 @@ python scripts/train_grpo.py --config configs/smoke_grpo.yaml \
 CPU can load tiny models only; **Qwen2.5-3B smoke train expects CUDA + bitsandbytes**.
 The reward/exec harness itself is CPU-only and fully tested.
 
-### Full recipe (run completed — measured results below)
+### Full recipe (overnight lean run — measured results below)
 
 1. Download Spider 1.0:
 
@@ -80,15 +80,16 @@ python scripts/download_spider.py
 python scripts/prepare_data.py --source spider --out-dir data/processed
 ```
 
-2. SFT then GRPO:
+2. SFT then GRPO (lean 4090 settings used for the published metrics):
 
 ```bash
-python scripts/train_sft.py --config configs/full_sft.yaml
-python scripts/train_grpo.py --config configs/full_grpo.yaml
+python scripts/train_sft.py --config configs/lean_full_sft.yaml
+python scripts/train_grpo.py --config configs/lean_full_grpo.yaml
 ```
 
-`configs/full_grpo.yaml` targets **~3000 prompts × 4 generations** with
+`configs/lean_full_grpo.yaml` runs **3000 prompts × 4 generations** with
 validity / execution / correctness rewards (`0.2 / 0.3 / 0.5`).
+Larger-GPU variants: `configs/full_sft.yaml` / `configs/full_grpo.yaml`.
 
 3. Eval comparisons:
 
@@ -100,6 +101,8 @@ python scripts/eval.py --data data/processed/dev.jsonl --model Qwen/Qwen2.5-3B-I
 python scripts/eval.py --data data/processed/dev.jsonl --model Qwen/Qwen2.5-3B-Instruct \
   --adapter outputs/full_grpo/adapter --out outputs/eval_grpo.json
 ```
+
+Published JSON for the overnight run is checked in under `results/eval/`.
 
 ## Reward design
 
@@ -117,8 +120,9 @@ total = 0.2 * validity + 0.3 * execution + 0.5 * correctness
 
 ```text
 app.py                 Gradio demo (HF Spaces entrypoint)
-configs/               smoke_* (free) and full_* (paid GPU) YAML
+configs/               smoke_*, lean_full_* (published), full_* YAML
 data/sample/           Mini Spider-like SQLite DBs + JSONL
+results/               MEASURED_RESULTS.md + eval/ JSON from Spider dev
 scripts/               download / prepare / train_sft / train_grpo / eval
 src/text_to_sql_grpo/  prompts, spider exec, rewards
 tests/                 unit tests for exec + rewards
@@ -146,8 +150,8 @@ Hugging Face Space (ZeroGPU + GRPO adapter): https://huggingface.co/spaces/abhis
 
 ## Measured results (Spider dev, n=1034)
 
-From overnight QLoRA SFT + GRPO on execution rewards (`scripts/eval.py`).
-Do **not** cite older resume figures (e.g. 34.2%→58.6%).
+From overnight QLoRA SFT + GRPO (`configs/lean_full_*.yaml`) via `scripts/eval.py`.
+Full write-up + raw JSON: [`results/MEASURED_RESULTS.md`](results/MEASURED_RESULTS.md).
 
 | Checkpoint | Exec accuracy | Exec success | Mean reward |
 |------------|---------------|--------------|-------------|

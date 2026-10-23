@@ -1,6 +1,6 @@
-# Full SFT recipe (paid GPU — e.g. 1× A100 40GB or 24GB+ consumer GPU)
-# Expected wall time: ~1–2 hours on A100 for ~7k Spider train examples, 1 epoch.
-# Free track does NOT run this overnight without GPU budget.
+# Full SFT recipe — larger-GPU variant (A100-class).
+# For the published overnight 4090 run, use configs/lean_full_sft.yaml instead.
+# Expected wall time: ~1–2 hours on A100 for ~7k–8k Spider train examples, 1 epoch.
 
 seed: 42
 output_dir: outputs/full_sft

@@ -164,6 +164,7 @@ def main() -> int:
         max_completion_length=int(cfg["train"].get("max_completion_length", 256)),
         max_prompt_length=int(cfg["train"].get("max_prompt_length", 1024)),
         temperature=float(cfg["train"].get("temperature", 0.7)),
+        gradient_checkpointing=bool(cfg["train"].get("gradient_checkpointing", False)),
     )
 
     trainer_kwargs = dict(
