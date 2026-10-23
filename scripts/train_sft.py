@@ -105,6 +105,7 @@ def main() -> int:
         bf16=bool(cfg["train"].get("bf16", False)) and torch.cuda.is_available(),
         fp16=bool(cfg["train"].get("fp16", False)) and torch.cuda.is_available(),
         max_seq_length=int(cfg["train"].get("max_seq_length", 1024)),
+        gradient_checkpointing=bool(cfg["train"].get("gradient_checkpointing", False)),
         report_to=cfg["train"].get("report_to", "none"),
         packing=False,
         dataset_text_field=None,

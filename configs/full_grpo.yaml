@@ -1,11 +1,8 @@
-# Full GRPO recipe — documented for paid GPU runs
+# Full GRPO recipe — larger-GPU variant (A100-class).
+# For the published overnight 4090 run, use configs/lean_full_grpo.yaml instead.
 #
-# Target scale (resume-style): ~3000 prompts × 4 generations
-# Wall time rough order: several A100-hours (often cited ~8.5h end-to-end
-# including SFT+GRPO+eval depending on hardware and logging).
-#
-# Free track documents this recipe but does not claim reproduced metrics
-# without a paid GPU run.
+# Target scale: ~3000 prompts × 4 generations
+# Wall time: several A100-hours end-to-end including SFT+GRPO+eval.
 
 seed: 42
 output_dir: outputs/full_grpo

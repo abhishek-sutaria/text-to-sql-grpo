@@ -1,0 +1,11 @@
+{
+  "n": 1034.0,
+  "mean_reward": 0.7701160541586087,
+  "exec_acc": 0.6083172147001934,
+  "exec_success": 0.8878143133462283,
+  "validity_rate": 0.9980657640232108,
+  "mode": "model",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "adapter": null,
+  "n_examples": 1034
+}

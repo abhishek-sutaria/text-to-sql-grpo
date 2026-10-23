@@ -2,11 +2,12 @@
 
 The [portfolio project](https://abhishek-sutaria.me/projects) describes:
 
-- Post-trained **Qwen2.5-3B** with **GRPO + QLoRA** on Spider 1.0
+- Post-trained **Qwen2.5-3B** with **QLoRA SFT + GRPO (3000×4)** on Spider execution rewards
 - Execution-based reward and eval framework
-- Reported metrics: execution accuracy **34.2% → 58.6%**, SQL execution success **68.5% → 86.9%**
+- **Measured** Spider dev (n=1034): Base **60.83%** / SFT **61.70%** / GRPO **62.67%** exec accuracy (see [`results/MEASURED_RESULTS.md`](../results/MEASURED_RESULTS.md))
 - Live demo: https://abhisheksutaria-text-to-sql-grpo.hf.space
 - Code: https://github.com/abhishek-sutaria/text-to-sql-grpo
+- Hub adapter: https://huggingface.co/abhisheksutaria/qwen2.5-3b-grpo-text-to-sql
 
 Visitors clicking from the portfolio should get a **real model**, not the schema-aware stub.
 
@@ -14,9 +15,9 @@ Visitors clicking from the portfolio should get a **real model**, not the schema
 
 1. **Space hardware:** `zero-a10g` with `@spaces.GPU` on `generate()` (already in `README_spaces.md`).
 2. **Base model:** `MODEL_ID=Qwen/Qwen2.5-3B-Instruct` (Space variable or default in `app.py` when `SPACE_ID` is set).
-3. **GRPO weights:** Upload LoRA adapter to Hugging Face Hub (e.g. `abhisheksutaria/qwen2.5-3b-grpo-text-to-sql`) and set Space secret **`ADAPTER_ID`** to that repo id.
+3. **GRPO weights:** Space secret **`ADAPTER_ID`** = `abhisheksutaria/qwen2.5-3b-grpo-text-to-sql`.
 4. **Smoke test after deploy:** In Gradio, pick `concert_singer`, ask “How many singers do we have?”, optional gold `SELECT count(*) FROM singer`. Notes panel must **not** say “stub generator”; SQL should come from the model (may differ from gold while still executing).
-5. **Metrics:** Reproduce portfolio numbers with `scripts/eval.py` on Spider dev and keep a JSON artifact under `outputs/` or document in README when full GPU recipe completes.
+5. **Metrics:** Reproduced with `scripts/eval.py` on Spider dev; JSON under `results/eval/` and table in README / `results/MEASURED_RESULTS.md`.
 
 ## Stub mode (dev only)
 

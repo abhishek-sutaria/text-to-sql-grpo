@@ -1,0 +1,11 @@
+{
+  "n": 1034.0,
+  "mean_reward": 0.7605415860735031,
+  "exec_acc": 0.6266924564796905,
+  "exec_success": 0.8239845261121856,
+  "validity_rate": 1.0,
+  "mode": "model",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "adapter": "outputs/full_grpo/adapter",
+  "n_examples": 1034
+}
