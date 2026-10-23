@@ -11,6 +11,10 @@ demo with Hub LoRA adapter, and measured Spider **dev** eval below.
 
 **Not** part of the Future of Jobs Vite app — standalone Python project.
 
+![Text-to-SQL RLVR pipeline (SFT → GRPO → eval → Hugging Face)](docs/assets/text-to-sql-pipeline.png)
+
+*Pipeline overview — Text-to-SQL RLVR pipeline (SFT → GRPO → eval → Hugging Face).*
+
 ## Quick start
 
 ```bash
